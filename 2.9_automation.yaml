@@ -1,0 +1,275 @@
+alias: ePaper - pollen vertical
+description: "@svenove - https://github.com/svenove/OpenEPaperLink-HA-Pollen"
+trigger:
+  - platform: time
+    at: "05:30:00"
+condition: []
+action:
+  - variables:
+      pollen1_name: Bjørk
+      pollen1_today: >-
+        {{state_attr('sensor.pollenvarsel', 'pollen')[0]['bjork_value'] | int(0)
+        }}
+      pollen1_tomorrow: >-
+        {{state_attr('sensor.pollenvarsel', 'pollen')[1]['bjork_value'] | int(0)
+        }}
+      pollen2_name: Or
+      pollen2_today: "{{state_attr('sensor.pollenvarsel', 'pollen')[0]['or_value'] | int(0) }}"
+      pollen2_tomorrow: "{{state_attr('sensor.pollenvarsel', 'pollen')[1]['or_value'] | int(0) }}"
+      pollen3_name: Hassel
+      pollen3_today: >-
+        {{state_attr('sensor.pollenvarsel', 'pollen')[0]['hassel_value'] |
+        int(0) }}
+      pollen3_tomorrow: >-
+        {{state_attr('sensor.pollenvarsel', 'pollen')[1]['hassel_value'] |
+        int(0) }}
+      pollen4_name: Burot
+      pollen4_today: >-
+        {{state_attr('sensor.pollenvarsel', 'pollen')[0]['burot_value'] | int(0)
+        }}
+      pollen4_tomorrow: >-
+        {{state_attr('sensor.pollenvarsel', 'pollen')[1]['burot_value'] | int(0)
+        }}
+      pollen5_name: Gress
+      pollen5_today: 4>-
+        {{state_attr('sensor.pollenvarsel', 'pollen')[0]['gress_value'] | int(0)
+        }}
+      pollen5_tomorrow: >-
+        {{state_attr('sensor.pollenvarsel', 'pollen')[1]['gress_value'] | int(0)
+        }}
+      text:
+        - Ingen
+        - Lav
+        - Lav +
+        - Middels
+        - Høy
+        - Ekstrem
+      weekdays: "{{ ['Man','Tir','Ons','Tor','Fre','Lør','Søn'] }}"
+  - service: open_epaper_link.drawcustom
+    target:
+      entity_id: open_epaper_link.0000021eccc03b18
+    data:
+      ttl: 60
+      background: white
+      rotate: 90
+      dry-run: false
+      payload:
+        - type: line
+          fill: red
+          width: 2
+          x_start: 5
+          y_start: 20
+          x_end: 121
+          y_end: 20
+        - type: line
+          fill: red
+          width: 2
+          x_start: 5
+          y_start: 73
+          x_end: 121
+          y_end: 73
+        - type: line
+          fill: red
+          width: 2
+          x_start: 5
+          y_start: 131
+          x_end: 121
+          y_end: 131
+        - type: line
+          fill: red
+          width: 2
+          x_start: 5
+          y_start: 189
+          x_end: 121
+          y_end: 189
+        - type: line
+          fill: red
+          width: 2
+          x_start: 5
+          y_start: 247
+          x_end: 121
+          y_end: 247
+        - type: text
+          value: "{{ weekdays[now().weekday()] }}"
+          font: ppb.ttf
+          x: 18
+          anchor: mm
+          "y": 10
+          size: 16
+          color: red
+        - type: text
+          value: "{{ weekdays[now().weekday()] }} {{ (now()|as_timestamp)|timestamp_custom('%H:%M')}}"
+          font: ppb.ttf
+          x: 64
+          anchor: mm
+          "y": 10
+          size: 10
+          color: black
+        - type: text
+          value: "{{ weekdays[now().weekday()+1] }}"
+          font: ppb.ttf
+          x: 110
+          anchor: mm
+          "y": 10
+          size: 16
+          color: red
+        - type: text
+          value: "{{pollen1_name}}"
+          font: ppb.ttf
+          x: 64
+          anchor: mm
+          "y": 35
+          size: 18
+          color: "{{'black' if pollen1_today < 3 else 'red' }}"
+        - type: text
+          value: "{{text[pollen1_today]}}"
+          font: ppb.ttf
+          x: 64
+          anchor: mm
+          "y": 57
+          size: 13
+          color: "{{'black' if pollen1_today < 3 else 'red' }}"
+        - type: text
+          value: "{{pollen1_today}}"
+          font: ppb.ttf
+          x: 18
+          anchor: mm
+          "y": 47
+          size: 45
+          color: "{{'black' if pollen1_today < 3 else 'red' }}"
+        - type: text
+          value: "{{pollen1_tomorrow}}"
+          font: ppb.ttf
+          x: 110
+          anchor: mm
+          "y": 47
+          size: 45
+          color: "{{'black' if pollen1_tomorrow < 3 else 'red' }}"
+        - type: text
+          value: "{{pollen2_name}}"
+          font: ppb.ttf
+          x: 64
+          anchor: mm
+          "y": 91
+          size: 18
+          color: "{{'black' if pollen2_today < 3 else 'red' }}"
+        - type: text
+          value: "{{text[pollen2_today]}}"
+          font: ppb.ttf
+          x: 64
+          anchor: mm
+          "y": 113
+          size: 13
+          color: "{{'black' if pollen2_today < 3 else 'red' }}"
+        - type: text
+          value: "{{pollen2_today}}"
+          font: ppb.ttf
+          x: 18
+          anchor: mm
+          "y": 103
+          size: 45
+          color: "{{'black' if pollen2_today < 3 else 'red' }}"
+        - type: text
+          value: "{{pollen2_tomorrow}}"
+          font: ppb.ttf
+          x: 110
+          anchor: mm
+          "y": 103
+          size: 45
+          color: "{{'black' if pollen2_tomorrow < 3 else 'red' }}"
+        - type: text
+          value: "{{pollen3_name}}"
+          font: ppb.ttf
+          x: 64
+          anchor: mm
+          "y": 151
+          size: 18
+          color: "{{'black' if pollen3_today < 3 else 'red' }}"
+        - type: text
+          value: "{{text[pollen3_today]}}"
+          font: ppb.ttf
+          x: 64
+          anchor: mm
+          "y": 173
+          size: 13
+          color: "{{'black' if pollen3_today < 3 else 'red' }}"
+        - type: text
+          value: "{{pollen3_today}}"
+          font: ppb.ttf
+          x: 18
+          anchor: mm
+          "y": 163
+          size: 45
+          color: "{{'black' if pollen3_today < 3 else 'red' }}"
+        - type: text
+          value: "{{pollen3_tomorrow}}"
+          font: ppb.ttf
+          x: 110
+          anchor: mm
+          "y": 163
+          size: 45
+          color: "{{'black' if pollen3_tomorrow < 3 else 'red' }}"
+        - type: text
+          value: "{{pollen4_name}}"
+          font: ppb.ttf
+          x: 64
+          anchor: mm
+          "y": 209
+          size: 18
+          color: "{{'black' if pollen4_today < 3 else 'red' }}"
+        - type: text
+          value: "{{text[pollen4_today]}}"
+          font: ppb.ttf
+          x: 64
+          anchor: mm
+          "y": 231
+          size: 13
+          color: "{{'black' if pollen4_today < 3 else 'red' }}"
+        - type: text
+          value: "{{pollen4_today}}"
+          font: ppb.ttf
+          x: 18
+          anchor: mm
+          "y": 221
+          size: 45
+          color: "{{'black' if pollen4_today < 3 else 'red' }}"
+        - type: text
+          value: "{{pollen4_tomorrow}}"
+          font: ppb.ttf
+          x: 110
+          anchor: mm
+          "y": 221
+          size: 45
+          color: "{{'black' if pollen4_tomorrow < 3 else 'red' }}"
+        - type: text
+          value: "{{pollen5_name}}"
+          font: ppb.ttf
+          x: 64
+          anchor: mm
+          "y": 262
+          size: 18
+          color: "{{'black' if pollen5_today < 3 else 'red' }}"
+        - type: text
+          value: "{{text[pollen5_today]}}"
+          font: ppb.ttf
+          x: 64
+          anchor: mm
+          "y": 284
+          size: 13
+          color: "{{'black' if pollen5_today < 3 else 'red' }}"
+        - type: text
+          value: "{{pollen5_today}}"
+          font: ppb.ttf
+          x: 18
+          anchor: mm
+          "y": 274
+          size: 45
+          color: "{{'black' if pollen5_today < 3 else 'red' }}"
+        - type: text
+          value: "{{pollen5_tomorrow}}"
+          font: ppb.ttf
+          x: 110
+          anchor: mm
+          "y": 274
+          size: 45
+          color: "{{'black' if pollen5_tomorrow < 3 else 'red' }}"
