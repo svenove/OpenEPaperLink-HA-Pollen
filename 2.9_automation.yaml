@@ -31,7 +31,7 @@ action:
         {{state_attr('sensor.pollenvarsel', 'pollen')[1]['burot_value'] | int(0)
         }}
       pollen5_name: Gress
-      pollen5_today: 4>-
+      pollen5_today: >-
         {{state_attr('sensor.pollenvarsel', 'pollen')[0]['gress_value'] | int(0)
         }}
       pollen5_tomorrow: >-
