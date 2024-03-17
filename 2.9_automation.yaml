@@ -44,7 +44,7 @@ action:
         - Middels
         - Høy
         - Ekstrem
-      weekdays: "{{ ['Man','Tir','Ons','Tor','Fre','Lør','Søn'] }}"
+      weekdays: "{{ ['Man','Tir','Ons','Tor','Fre','Lør','Søn', 'Man'] }}"
   - service: open_epaper_link.drawcustom
     target:
       entity_id: open_epaper_link.0000021eccc03b18
