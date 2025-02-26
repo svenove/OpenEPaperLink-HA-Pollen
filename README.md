@@ -3,7 +3,8 @@
 
 ## Integrations needed:
 * https://github.com/jonasniesner/open_epaper_link_homeassistant (Install via HACS)
-* An integration that fetches the pollen information you want to display (5 kinds of pollen)
+* An integration that fetches the pollen information you want to display (5 kinds of pollen) - like this one:
+https://github.com/svenove/home-assistant-google-pollen
 
 ## Initial setup
 1. Create a new automation from the [2.9_automation.yaml](https://github.com/svenove/OpenEPaperLink-HA-Pollen/blob/main/2.9_automation.yaml) 
